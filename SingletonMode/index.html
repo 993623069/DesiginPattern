@@ -6,6 +6,63 @@
 	<script type="text/javascript" src="index.js"></script>
 </head>
 <body>
-	
+     <h2>单例模式</h2>
+	<dl>
+		<dt><h4>单例模式概念文字解读</h4></dt>
+		<dd>单例就是保证一个类只有一个实例，实现的方法一般是
+		先判断实例存在与否，如果存在直接返回，如果不存在就创建了在返回，
+	    这就确保了一个类只有一个实例对象。在JavaScript里，单例作为一个命名空间提供者，从全局命名空间里提供一个唯一的访问点来访问对象。</dd>
+	</dl>
+	<h2>单例模式的作用和注意事项</h2>
+    <dl>
+		<dt><h4>模式作用</h4></dt>
+		<dd>1.模块间通信</dd>
+		<dd>2.系统中某个类的对象只能存在一个</dd>
+		<dd>3.保护自己的属性和方法</dd>
+	</dl>
+	<dl>
+		<dt><h4>注意事项</h4></dt>
+		<dd>1.注意this的使用</dd>
+		<dd>2.闭包容易造成内存泄漏，不需要的赶快干掉</dd>
+	    <dd>3.注意new</dd>
+	</dl>
+    <dl>
+    	<dt><h4>代码实战</h4></dt>
+    	<dd>
+    		<pre>
+//1.独立的对象，建2个 一个为xiaowang 一个为xiaoli
+//2.让Xiaoli跟Xiaowang通过门铃进行通信
+//3.先看一下xiaowang家有没有门 如果有门直接通过门铃通讯didi 如果没有先建门
+//4.两个单例之间开始通信
+
+var xiaowang=(function(argument){
+	var xiaowangjia=function(message){
+        this.menling=message;
+	}
+	var men;
+	var info={
+		sendMessage:function(message){
+            if(!men){
+            	men = new xiaowangjia(message);
+            }
+            return men;
+		}
+	}
+	return info;
+})();
+
+var xiaoli={
+	callXiaowang:function(msg){
+		console.log(xiaowang)
+		var _xw=xiaowang.sendMessage(msg);
+		alert(_xw.menling)
+		_xw=null;//等待垃圾回收机制
+	}
+}
+xiaoli.callXiaowang('didi')
+    		</pre>
+    	</dd>
+    </dl>
+
 </body>
 </html>
